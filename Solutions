@@ -28,6 +28,11 @@ cmd dst, src
 	Answer = 338.724
 
 0x03:
+Consist of:
+	-Main->
+	-Test->
+	-Shift->ret
+	
 	ESP-calc
 	ESP=-0x18
 	  -0x18
@@ -57,7 +62,9 @@ cmd dst, src
 =	1111.1111|1111.1111|1111.1111|1110.0000
 
 
-	same as above, then:
+	same as task 2 again,
+	UNTIL HERE CORRECT -> Follow jumps instead of getting hung up!
+	then:
 	esp+4 = 0000.0000|0000.0101|0010.1011|0010.0100
 
 	ALT1:

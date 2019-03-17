@@ -88,4 +88,150 @@ Consist of:
 
 	EBP-4 ins to EAX: WHAT VALUE IS ebp-0x4??
 	
+	
+[0x08048360]> s 0x080484df
+[0x080484df]> aeim
+[0x080484df]> aeip
+[0x080484df]> aesu 0x08048506
+[0x080484df]> dr=
+oeax 0x00000000      eax 0x00052b24      ebx 0x00000000      ecx 0x00000000
+ edx 0x000001ec      esi 0x00000000      edi 0x00000000      esp 0x00178000
+ ebp 0x00178000      eip 0x08048506      eflags             
+[0x080484df]> ? eax
+hex     0x52b24
+int32   338724
 
+0x04:
+	Breakpoint 3, 0x080484da in check ()
+(gdb) set $ZF = 6
+(gdb) set $eflags |= (1 << $ZF)
+
+
+PW found by:
+1111111111111111
+So our key simply has to be numeric, and its sum must be 0xf, aka 16
+
+
+
+0x05:
+Set result true:
+(0x0804851a = check)
+0x0804851e
+(gdb):
+set $ZF = 6
+set $eflags |= (1 << $ZF)
+
+Not Needed!
+Repeat at:
+(0x080484a7
+0x080484aa = Instructions for compare)
+0x080484ac
+
+PW found by:
+Nothing funky, a simple
+and eax, 1
+check, to see if the key is divisible by 2
+sum = 16, has to be dividable by 2
+
+55222
+
+0x06:
+
+Set ZF:
+(0x080485da = Check)
+0x080485de
+(gdb):
+set $ZF = 6
+set $eflags |= (1 << $ZF)
+
+Clear ZF:
+(0x0804854c = check)
+0x804854e
+set $eflags ^= (1 << $ZF)
+
+(No action needed)
+(0x08048563 = Check)
+0x08048565
+
+Get pw:
+Same as before, but with environment variable!
+LOLO=1337 ./crackme0x06
+
+0x07:
+Main:
+FUN_0804867d
+
+Check:
+FUN_080485b9
+
+Parell:
+FUN_08048542
+
+
+Fix:
+0x0804860f = Set ZF
+set $ZF = 6
+set $eflags |= (1 << $ZF)
+
+0x08048576 = Make sure ZF is not set
+set $eflags ^= (1 << $ZF)
+
+0x0804858d = Make sure ZF is set (is by default)
+
+0x08048596 = Make sure ZF is set
+set $eflags |= (1 << $ZF)
+
+
+cmp + ZF means operands are equal!
+
+LOLO= ./crackme0x07
+111111118
+
+
+0x08:
+Main -> Check -> Parell -> done!
+
+cmp + jnz => not equal => ZF not set
+
+
+ZF set: 
+0x0804860f
+
+ZF not set: 
+0x08048576
+
+ZF set:
+0x0804858d
+
+ZF set:
+0x08048596
+
+
+set $ZF = 6
+set $eflags |= (1 << $ZF)
+
+set $eflags ^= (1 << $ZF)
+
+PW:
+LOLO= ./crackme0x08
+Password: 111111118
+
+0x09:
+(Main) -> (Check) -> (Parell) -> Done
+FUN_080486ee -> FUN_08048616 -> FUN_08048589 -> Done
+
+
+
+
+0x0804867a = ZF set
+0x080485cb = ZF not set
+0x080485e2 = ZF set
+0x080485ed = ZF set
+
+set $ZF = 6
+set $eflags |= (1 << $ZF)
+
+set $eflags ^= (1 << $ZF)
+
+LOLO= ./crackme0x09
+Password: 111111118
